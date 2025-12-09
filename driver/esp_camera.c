@@ -27,6 +27,8 @@
 #include "cam_hal.h"
 #include "esp_camera.h"
 #include "xclk.h"
+
+#include "pca9536d.h"
 #if CONFIG_OV2640_SUPPORT
 #include "ov2640.h"
 #endif
@@ -197,15 +199,20 @@ static esp_err_t camera_probe(const camera_config_t *config, camera_model_t *out
 
     if (config->pin_pwdn >= 0) {
         ESP_LOGD(TAG, "Resetting camera by power down line");
-        gpio_config_t conf = { 0 };
-        conf.pin_bit_mask = 1LL << config->pin_pwdn;
-        conf.mode = GPIO_MODE_OUTPUT;
-        gpio_config(&conf);
+        // gpio_config_t conf = { 0 };
+        // conf.pin_bit_mask = 1LL << config->pin_pwdn;
+        // conf.mode = GPIO_MODE_OUTPUT;
+        // gpio_config(&conf);
 
         // carefull, logic is inverted compared to reset pin
-        gpio_set_level(config->pin_pwdn, 1);
+        // gpio_set_level(config->pin_pwdn, 1);
+        // vTaskDelay(10 / portTICK_PERIOD_MS);
+        // gpio_set_level(config->pin_pwdn, 0);
+        // vTaskDelay(10 / portTICK_PERIOD_MS);
+
+        pca9536d_set_state(config->pin_pwdn, PCA9536D_HIGH);
         vTaskDelay(10 / portTICK_PERIOD_MS);
-        gpio_set_level(config->pin_pwdn, 0);
+        pca9536d_set_state(config->pin_pwdn, PCA9536D_LOW);
         vTaskDelay(10 / portTICK_PERIOD_MS);
     }
 

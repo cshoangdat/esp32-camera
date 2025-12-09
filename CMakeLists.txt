@@ -104,5 +104,5 @@ idf_component_register(
   INCLUDE_DIRS ${include_dirs}
   PRIV_INCLUDE_DIRS ${priv_include_dirs}
   REQUIRES ${req}
-  PRIV_REQUIRES ${priv_requires}
+  PRIV_REQUIRES ${priv_requires} PCA9536D
 )
