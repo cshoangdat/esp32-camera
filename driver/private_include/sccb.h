@@ -10,6 +10,7 @@
 #define __SCCB_H__
 #include <stdint.h>
 int SCCB_Init(int pin_sda, int pin_scl);
+int SCCB_Init_Desc(int pin_sda, int pin_scl, int i2c_master_num);
 int SCCB_Use_Port(int sccb_i2c_port);
 int SCCB_Deinit(void);
 int SCCB_Probe(uint8_t slv_addr);

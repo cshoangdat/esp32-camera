@@ -274,6 +274,8 @@ esp_err_t esp_camera_reconfigure(const camera_config_t *config);
  */
 bool esp_camera_get_psram_mode(void);
 
+esp_err_t esp_camera_init_desc(int pin_sda, int pin_scl, int i2c_num);
+
 
 #ifdef __cplusplus
 }
